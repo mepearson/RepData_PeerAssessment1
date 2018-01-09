@@ -1,0 +1,49 @@
+---
+title: "Reproducible Research: Peer Assessment 1"
+author: "Melissa Pearson"
+date: "1/9/2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Loading and preprocessing the data
+
+Create data folder in working directory if it does not exist, then access and download the data into this folder
+```{r}
+if(!file.exists("data")){dir.create("data")}
+zipurl <- "https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2Factivity.zip"
+destzip <- "./data/activitydata.zip"
+destfile <- "./data/activitydata"
+download.file(url=zipurl, destfile=destzip, method='curl')
+unzip(destzip,exdir=destfile)
+```
+
+
+Load R libraries for use
+```{r}
+library(dplyr)
+```
+
+Load the data from the local data file into a data frame to use, and convert to tibble
+```{r}
+fname <- "./data/activitydata/activity.csv"
+activity <- read.csv(fname)
+activity <- tbl_df(activity)
+```
+
+## What is mean total number of steps taken per day?
+
+
+
+## What is the average daily activity pattern?
+
+
+
+## Imputing missing values
+
+
+
+## Are there differences in activity patterns between weekdays and weekends?

@@ -83,7 +83,7 @@ ggplot(aday, aes(m)) + geom_histogram(color="darkblue", fill="lightblue") +
 ## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
 ```
 
-![](PA1_template_files/figure-html/plot steps per day-1.png)<!-- -->
+![](PA1_template_files/figure-html/plot_steps_per_day-1.png)<!-- -->
 
 3. Calculate and report the mean and median of the total number of steps taken per day
 
@@ -105,7 +105,7 @@ atype$interval <- as.factor(atype$interval)
 ggplot(atype, aes(x=interval, y=m)) + geom_point(color="darkblue") + labs(x = "steps interval", y = "mean steps during interval", title = "mean steps per interval over testing period")
 ```
 
-![](PA1_template_files/figure-html/time series intervals-1.png)<!-- -->
+![](PA1_template_files/figure-html/time_series_intervals-1.png)<!-- -->
 
 2. Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?
 
@@ -162,7 +162,7 @@ ggplot(amday, aes(m)) + geom_histogram(color="darkblue", fill="lightblue") +
 ## Warning: Removed 1 rows containing missing values (geom_bar).
 ```
 
-![](PA1_template_files/figure-html/histogram steps each day-1.png)<!-- -->
+![](PA1_template_files/figure-html/histogram_steps_each_day-1.png)<!-- -->
 
 ```r
 impmean <- mean(amday$m)
@@ -211,4 +211,4 @@ aw$interval <- as.factor(aw$interval)
       xlab='Interval',ylab='Number of Steps', data=aw)
 ```
 
-![](PA1_template_files/figure-html/time series plot-1.png)<!-- -->
+![](PA1_template_files/figure-html/time_series_plot-1.png)<!-- -->

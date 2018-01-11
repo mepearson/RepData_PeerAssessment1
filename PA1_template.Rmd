@@ -46,7 +46,7 @@ aday <- activity %>% filter(!is.na(steps)) %>% group_by(date) %>% summarize(m = 
 ```
 
 2. Make a histogram of the total number of steps taken each day
-```{r plot steps per day}
+```{r plot_steps_per_day}
 ggplot(aday, aes(m)) + geom_histogram(color="darkblue", fill="lightblue") + 
       labs(title="Average Daily Steps Total", x="Daily Steps Average", y="Days") +
       scale_y_continuous(breaks=c(2,4,6,8,10), limits = c(0,10)) 
@@ -63,7 +63,7 @@ totalmed <- median(aday$m)
 
 ## What is the average daily activity pattern?
 1. Make a time series plot (i.e. 𝚝𝚢𝚙𝚎 = "𝚕") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all days (y-axis)
-```{r time series intervals}
+```{r time_series_intervals}
 atype <- activity %>% filter(!is.na(steps)) %>% group_by(interval) %>% summarize(m = mean(steps))
 #insure interval is treated as a factor
 atype$interval <- as.factor(atype$interval)
@@ -106,7 +106,7 @@ ams <- am %>% select(impsteps,date,interval)
 
 
 4. Make a histogram of the total number of steps taken each day and Calculate and report the mean and median total number of steps taken per day. 
-```{r histogram steps each day}
+```{r histogram_steps_each_day}
 amday <- ams %>%  group_by(date) %>% summarize(m = 288*mean(impsteps))
 ggplot(amday, aes(m)) + geom_histogram(color="darkblue", fill="lightblue") + 
       labs(title="Average Daily Steps Total", x="Daily Steps Average", y="Days") +
@@ -138,7 +138,7 @@ ams$weekend <- as.factor(ams$weekend)
 ```
 
 2. Make a panel plot containing a time series plot (i.e. 𝚝𝚢𝚙𝚎 = "𝚕") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all weekday days or weekend days (y-axis).
-```{r time series plot}
+```{r time_series_plot}
 #Group data by weekend and interval and calculate mean
 aw <- ams %>% group_by(weekend,interval) %>% summarize(m = mean(impsteps))
 #insure interval is treated as a factor

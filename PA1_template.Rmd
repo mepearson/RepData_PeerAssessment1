@@ -7,7 +7,7 @@ keep_md: true
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, cache = TRUE)
+knitr::opts_chunk$set(echo = TRUE, cache = FALSE)
 ```
 
 ## Loading and preprocessing the data
@@ -40,12 +40,14 @@ activity <- tbl_df(activity)
 ## What is mean total number of steps taken per day?
 1. Calculate the total number of steps taken per day
 ```{r}
-aday <- activity %>% filter(!is.na(steps)) %>% group_by(date) %>% summarize(m = mean(steps))
+aday <- activity %>% filter(!is.na(steps)) %>% group_by(date) %>% summarize(m = 288*mean(steps))
 ```
 
 2. Make a histogram of the total number of steps taken each day
-```{r}
-ggplot(aday, aes(m)) + geom_histogram()
+```{r plot steps per day}
+ggplot(aday, aes(m)) + geom_histogram(color="darkblue", fill="lightblue") + 
+      labs(title="Average Daily Steps Total", x="Daily Steps Average", y="Days") +
+      scale_y_continuous(breaks=c(2,4,6,8,10), limits = c(0,10)) 
 ```
 
 3. Calculate and report the mean and median of the total number of steps taken per day
@@ -59,11 +61,11 @@ totalmed <- median(aday$m)
 
 ## What is the average daily activity pattern?
 1. Make a time series plot (i.e. 𝚝𝚢𝚙𝚎 = "𝚕") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all days (y-axis)
-```{r}
+```{r time series intervals}
 atype <- activity %>% filter(!is.na(steps)) %>% group_by(interval) %>% summarize(m = mean(steps))
 #insure interval is treated as a factor
 atype$interval <- as.factor(atype$interval)
-ggplot(atype, aes(x=interval, y=m)) + geom_point() + labs(x = "steps interval", y = "mean steps during interval", title = "mean steps per interval over testing period")
+ggplot(atype, aes(x=interval, y=m)) + geom_point(color="darkblue") + labs(x = "steps interval", y = "mean steps during interval", title = "mean steps per interval over testing period")
 ```
 
 2. Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?
@@ -102,18 +104,21 @@ ams <- am %>% select(impsteps,date,interval)
 
 
 4. Make a histogram of the total number of steps taken each day and Calculate and report the mean and median total number of steps taken per day. 
-```{r}
-amday <- ams %>%  group_by(date) %>% summarize(m = mean(impsteps))
-ggplot(amday, aes(m)) + geom_histogram()
+```{r histogram steps each day}
+amday <- ams %>%  group_by(date) %>% summarize(m = 288*mean(impsteps))
+ggplot(amday, aes(m)) + geom_histogram(color="darkblue", fill="lightblue") + 
+      labs(title="Average Daily Steps Total", x="Daily Steps Average", y="Days") +
+      scale_y_continuous(breaks=c(2,4,6,8,10), limits = c(0,10)) 
 impmean <- mean(amday$m)
 impmed <- median(amday$m)
+
+
 ```
 Do these values differ from the estimates from the first part of the assignment? 
 
-Dataset     Mean              Median
-------      ------            ------     
-Original    `r totalmean`           `r totalmed`
-Imputed     `r impmean`         `r impmed`
+**Data [Original vs. Imputed]**  
+Mean: `r format(totalmean, scientific = FALSE)` vs `r format(impmean,scientific=FALSE)`  
+Median: `r format(totalmed, scientific = FALSE)` vs. `r format(impmed,scientific=FALSE)`  
 
 What is the impact of imputing missing data on the estimates of the total daily number of steps?
 It sets the median equal to the mean
@@ -131,7 +136,7 @@ ams$weekend <- as.factor(ams$weekend)
 ```
 
 2. Make a panel plot containing a time series plot (i.e. 𝚝𝚢𝚙𝚎 = "𝚕") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all weekday days or weekend days (y-axis).
-```{r}
+```{r time series plot}
 #Group data by weekend and interval and calculate mean
 aw <- ams %>% group_by(weekend,interval) %>% summarize(m = mean(impsteps))
 #insure interval is treated as a factor
